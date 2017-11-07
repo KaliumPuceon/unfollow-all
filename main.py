@@ -1,7 +1,6 @@
 #! /usr/bin/python3
-
+# pylint: disable=C0103
 """helo"""
-import json
 import pytumblr
 import keys
 
@@ -16,24 +15,36 @@ client = pytumblr.TumblrRestClient(
 
 # Make the request
 
-following = client.following(limit=2000)
-followers = client.followers("andmaybegayer.tumblr.com",limit=200)
+numFollowing = client.following()["total_blogs"]
+numFollowers = client.followers(keys.blogurl)["total_users"]
 
-blogs = following["blogs"]
-users = followers["users"]
+followersUsers = []
+followersUrls = []
 
-print(len(blogs))
-print(len(users))
+print(client.followers(keys.blogurl))
 
-unames = []
-bnames = []
+for k in range(0, round(numFollowers/20)):
+    block = client.followers(keys.blogurl, offset=20*k)
+    users = block["users"]
+    for user in users:
+        followersUrls.append(user["url"])
+        followersUsers.append(user["name"])
 
-for user in users:
-    unames.append(user["name"])
-    bnames.append(user["url"])
-
-print(blogs)
+print(followersUrls)
 print()
-print(unames)
+print(followersUsers)
 print()
-print(bnames)
+
+followingUrls = []
+followingUsers = []
+
+for k in range(0, round(numFollowing/20)):
+    block = client.following(offset=20*k)
+    blogs = block["blogs"]
+    for blog in blogs:
+        followingUrls.append(blog["url"])
+        followingUsers.append(blog["name"])
+
+print(followingUrls)
+print()
+print(followingUsers)
