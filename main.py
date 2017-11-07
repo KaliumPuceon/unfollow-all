@@ -18,10 +18,8 @@ client = pytumblr.TumblrRestClient(
 numFollowing = client.following()["total_blogs"]
 numFollowers = client.followers(keys.blogurl)["total_users"]
 
-followersUsers = []
-followersUrls = []
-
-print(client.followers(keys.blogurl))
+followersUsers = [] #list of following blogs by URL
+followersUrls = [] #list of users who own following blogs
 
 for k in range(0, round(numFollowers/20)):
     block = client.followers(keys.blogurl, offset=20*k)
@@ -30,13 +28,8 @@ for k in range(0, round(numFollowers/20)):
         followersUrls.append(user["url"])
         followersUsers.append(user["name"])
 
-print(followersUrls)
-print()
-print(followersUsers)
-print()
-
-followingUrls = []
-followingUsers = []
+followingUrls = [] #list of followed blogs by URL
+followingUsers = [] #list of users who own followed blogs
 
 for k in range(0, round(numFollowing/20)):
     block = client.following(offset=20*k)
@@ -45,6 +38,8 @@ for k in range(0, round(numFollowing/20)):
         followingUrls.append(blog["url"])
         followingUsers.append(blog["name"])
 
-print(followingUrls)
-print()
-print(followingUsers)
+# If a you are following a user and they follow you, keep them, I guess
+
+for user, url in zip(followingUsers, followingUrls):
+    if not ((user in followersUsers) or (url in followersUrls)):
+        print("unfollowing of "+user+" running "+url+" recommended")
