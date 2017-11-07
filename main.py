@@ -19,11 +19,16 @@ client = pytumblr.TumblrRestClient( #fetch keys from keys.py because Git
 
 # Make the request
 
+print("Fetching number of blogs")
 numFollowing = client.following()["total_blogs"]
 numFollowers = client.followers(keys.blogurl)["total_users"]
+print("Blogs counted\n")
+
 
 followersUsers = [] #list of following blogs by URL
 followersUrls = [] #list of users who own following blogs
+
+print("Fetching all "+str(numFollowers)+" followers")
 
 for k in range(0, round(numFollowers/20)):
     block = client.followers(keys.blogurl, offset=20*k)
@@ -32,9 +37,15 @@ for k in range(0, round(numFollowers/20)):
         followersUrls.append(user["url"])
         followersUsers.append(user["name"])
 
+    print(str(20*k)+" of "+str(numFollowers)+" fetched")
+
+print("Followers fetched\n")
+
+
 followingUrls = [] #list of followed blogs by URL
 followingUsers = [] #list of users who own followed blogs
 
+print("Fetching all "+str(numFollowing)+" followed blogs")
 for k in range(0, round(numFollowing/20)):
     block = client.following(offset=20*k)
     blogs = block["blogs"]
@@ -42,20 +53,30 @@ for k in range(0, round(numFollowing/20)):
         followingUrls.append(blog["url"])
         followingUsers.append(blog["name"])
 
+    print(str(20*k)+" of "+str(numFollowing)+" fetched")
+
+print("Followed blogs fetched\n")
+
 # If a you are following a user and they follow you, keep them, I guess
 
 unfollowCount = 0
 unfollowList = []
 
+print("Filtering out mutuals")
 for user, url in zip(followingUsers, followingUrls):
     if not ((user in followersUsers) or (url in followersUrls)):
         print("unfollowing of "+user+" running "+url+" recommended")
         unfollowList.append(url)
         unfollowCount += 1
+print("Filtering done\n")
 
-confirm = input("Are you sure you want to unfollow "+unfollowCount+" blogs? Type yes to continue")
+confirm = input("Are you sure you want to unfollow "+str(unfollowCount)+" blogs? Type yes to continue:\n")
 
 if confirm == "yes":
 
     for url in unfollowList:
+        print("Unfollowing "+url)
         client.unfollowList(url)
+
+else:
+    print("Alright, cool")
