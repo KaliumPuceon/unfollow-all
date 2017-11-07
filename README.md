@@ -17,10 +17,12 @@ Go [here,](https://api.tumblr.com/console/) give the app access and click the "S
 Keys" button at the top of the screen. Copy those keys into the right strings
 below. They're in the right order and everything at the time of writing.
 
-Lastly, fill in your blog name. This only works if you only have one blog, I
+Fill in your blog name. This only works if you only have one blog, I
 Still need to add multi-blog-support so hang on if that's your deal because
 Gods this could go badly if you try something clever with it. If you want to
 get on that before I do feel free.
+
+Lastly, save the file, close it, and rename it to keys.py
 
 # Limitations
 The tumblr API is rate limited to 1000 requests per hour. If you follow/are
