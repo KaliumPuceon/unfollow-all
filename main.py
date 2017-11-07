@@ -1,12 +1,16 @@
 #! /usr/bin/python3
 # pylint: disable=C0103
-"""helo"""
+
+"""
+RUN THIS TO KILL YOUR BLOG IMMEDIATELY
+"""
+
 import pytumblr
 import keys
 
 # Authenticate via OAuth
 
-client = pytumblr.TumblrRestClient(
+client = pytumblr.TumblrRestClient( #fetch keys from keys.py because Git
     keys.consumer_key,
     keys.consumer_secret,
     keys.oauth_token,
@@ -40,6 +44,18 @@ for k in range(0, round(numFollowing/20)):
 
 # If a you are following a user and they follow you, keep them, I guess
 
+unfollowCount = 0
+unfollowList = []
+
 for user, url in zip(followingUsers, followingUrls):
     if not ((user in followersUsers) or (url in followersUrls)):
         print("unfollowing of "+user+" running "+url+" recommended")
+        unfollowList.append(url)
+        unfollowCount += 1
+
+confirm = input("Are you sure you want to unfollow "+unfollowCount+" blogs? Type yes to continue")
+
+if confirm == "yes":
+
+    for url in unfollowList:
+        client.unfollowList(url)
