@@ -76,7 +76,7 @@ if confirm == "yes":
 
     for url in unfollowList: #unfollow everyone for real
         print("Unfollowing "+url)
-        client.unfollowList(url)
+        client.unfollow(url)
 
 else:
     print("Alright, cool")

@@ -4,7 +4,7 @@ so I decided to get rid of them all. Sitting and clicking on "Unfollow" sounded
 bad, though, so I did this.
 
 # Stuff you'll need
-You need to have*
+You need to have
 1. A Tumblr, obviously
 1. Python 3
 1. PyTumblr (Install with pip)
@@ -13,7 +13,7 @@ You need to have*
 # Key Setup Instructions
 Go [here](https://www.tumblr.com/oauth/apps) and register an application
 
-Go [here](https://api.tumblr.com/console/) give the app access and click the "Show
+Go [here,](https://api.tumblr.com/console/) give the app access and click the "Show
 Keys" button at the top of the screen. Copy those keys into the right strings
 below. They're in the right order and everything at the time of writing.
 
@@ -33,3 +33,9 @@ blog. DO NOT USE THIS IF YOU HAVE MANY BLOG-EXCLUSIVE MUTUALS. It'll be bad.
 
 If you feel like fixing either of these for me, do a pull request and I'll learn
 how those work to accept it.
+
+# TODO
+1. Add multi-blog support
+1. Add more options (e.g. unfollow all, unfollow those who follow me, etc.)
+1. Add memory because if you mess up and need to rerun this it takes an /age/
+1. Make into a web service? I'm sure someone wants this.
