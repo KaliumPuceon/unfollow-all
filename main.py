@@ -31,7 +31,7 @@ followersUrls = [] #list of users who own following blogs
 print("Fetching all "+str(numFollowers)+" followers")
 
 for k in range(0, round(numFollowers/20)):
-    block = client.followers(keys.blogurl, offset=20*k)
+    block = client.followers(keys.blogurl, offset=20*k) #fetch block of followers
     users = block["users"]
     for user in users:
         followersUrls.append(user["url"])
@@ -47,7 +47,7 @@ followingUsers = [] #list of users who own followed blogs
 
 print("Fetching all "+str(numFollowing)+" followed blogs")
 for k in range(0, round(numFollowing/20)):
-    block = client.following(offset=20*k)
+    block = client.following(offset=20*k) #fetch block of followed blogs
     blogs = block["blogs"]
     for blog in blogs:
         followingUrls.append(blog["url"])
@@ -63,18 +63,18 @@ unfollowCount = 0
 unfollowList = []
 
 print("Filtering out mutuals")
-for user, url in zip(followingUsers, followingUrls):
+for user, url in zip(followingUsers, followingUrls): #tuple iterable of followed blogs
     if not ((user in followersUsers) or (url in followersUrls)):
         print("unfollowing of "+user+" running "+url+" recommended")
         unfollowList.append(url)
         unfollowCount += 1
 print("Filtering done\n")
 
-confirm = input("Are you sure you want to unfollow "+str(unfollowCount)+" blogs? Type yes to continue:\n")
+confirm = input("Are you sure you want to unfollow "+str(unfollowCount)+" blogs? Type yes to continue:\n") #I take no responsibility for wholly borking up your entire blog
 
 if confirm == "yes":
 
-    for url in unfollowList:
+    for url in unfollowList: #unfollow everyone for real
         print("Unfollowing "+url)
         client.unfollowList(url)
 
